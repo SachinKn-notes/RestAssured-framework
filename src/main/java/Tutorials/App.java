@@ -1,4 +1,4 @@
-package org.example;
+package Tutorials;
 
 /**
  * Hello world!
