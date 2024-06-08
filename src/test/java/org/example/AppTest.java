@@ -1,38 +1,28 @@
 package org.example;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import io.restassured.RestAssured;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+public class AppTest {
+
+    public static void main(String[] args) {
+
+        RestAssured.baseURI = "https://reqres.in";
+
+        String response = RestAssured
+            .given()
+                .header("Content-Type", "application/json; charset=utf-8")
+                .queryParam("page", "2")
+            .when()
+                .get("/api/users")
+            .then()
+                .log()
+                .all()
+            .assertThat()
+                .statusCode(200)
+            .extract()
+                .body()
+                .asString();
+
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
-    }
 }
