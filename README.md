@@ -353,7 +353,34 @@ public void RequestSpecBuilder() {
 
 ## 8. Response Spec Builder.
 ```
+public void ResponseSpecBuilder() {
+    RequestSpecification reqSpec = new RequestSpecBuilder()
+            .setBaseUri("https://reqres.in")
+            .setContentType(ContentType.JSON)
+            .addHeader("Content-Type", "application/json; charset=utf-8")
+            .addPathParam("path", "api")
+            .addQueryParam("page", "2")
+            .addFormParam("", "")
+        .build();
 
+    ResponseSpecification resSpec = new ResponseSpecBuilder()
+            .expectStatusCode(200)
+            .expectContentType(ContentType.JSON)
+            .expectBody("data[0].email", Matchers.equalTo("michael.lawson@reqres.in"))
+            .build();
+
+    RestAssured
+        .given()
+            .spec(reqSpec) // Request Spec Builder
+        .when()
+            .post("/api/users")
+        .then()
+            .spec(resSpec) // Response Spec Builder
+        .extract()
+            .body()
+            .asString();
+
+}
 ```
 
 
