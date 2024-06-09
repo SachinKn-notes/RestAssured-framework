@@ -248,7 +248,8 @@ public void jsonPathTest() {
 >> totalSum -> 910
 ```
 
-## 7. Serialization - Converts a Java object, such as a Plain Old Java Object (POJO), into a format like JSON
+## 7. Serialization
+**Converts a Java object, such as a Plain Old Java Object (POJO), into a format like JSON**
 ```
 public void jsonSerialization() {
 	Dashboard dashboard = new Dashboard();
@@ -284,7 +285,8 @@ public void jsonSerialization() {
 }
 ```
 
-## 7. Deserialization - he opposite of serialization, deserialization converts the serialized data back into a Java object.
+## 7. Deserialization
+**The opposite of serialization, deserialization converts the serialized data back into a Java object.**
 ```
 public void jsonDeserialization() {
 
