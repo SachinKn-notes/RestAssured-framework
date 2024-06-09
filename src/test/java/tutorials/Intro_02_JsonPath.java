@@ -1,4 +1,4 @@
-package PojoClasses;
+package tutorials;
 
 import io.restassured.RestAssured;
 import io.restassured.filter.session.SessionFilter;

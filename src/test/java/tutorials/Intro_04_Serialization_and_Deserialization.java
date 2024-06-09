@@ -1,5 +1,8 @@
-package PojoClasses;
+package tutorials;
 
+import PojoClasses.Course;
+import PojoClasses.Dashboard;
+import PojoClasses.Root;
 import com.google.gson.Gson;
 import org.testng.annotations.Test;
 
