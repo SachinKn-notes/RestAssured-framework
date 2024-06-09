@@ -194,6 +194,27 @@ public void jsonPathTest() {
 
 }
 ```
+**Output**
+```
+1. Print No of courses returned by API
+>> 3
+
+2. Print Purchase Amount
+>> 910
+
+3. Print Title of the first course
+>> Selenium Java
+
+4. Print All course titles and their respective Prices
+>> Selenium Java
+
+5. Print no of copies sold by Playwright Course
+>> 45
+
+6. Verify if Sum of all Course prices matches with Purchase Amount
+>> purchaseAmount -> 910
+>> totalSum -> 910
+```
 
 
 
