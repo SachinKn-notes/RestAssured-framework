@@ -1,6 +1,7 @@
 package Tutorials;
 
 import io.restassured.RestAssured;
+import io.restassured.filter.session.SessionFilter;
 import io.restassured.path.json.JsonPath;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
@@ -116,4 +117,87 @@ public class Intro_01_Get_Post_JsonPath {
         System.out.println(">> totalSum -> " + totalSum);
 
     }
+
+    @Test
+    public void dynamicPathParameterRequest() {
+
+        String postResponse = RestAssured
+            .given()
+                .pathParam("path1", "api") // Set the path Params
+                .header("Content-Type", "application/json; charset=utf-8")
+                .queryParam("page", "2")
+                .body("")
+            .when()
+                .get("/{path1}/users")  // Get the path Params
+            .then()
+                .extract()
+                .body()
+                .asString();
+
+        System.out.println("postResponse --> " + postResponse);
+    }
+
+    @Test(enabled = false) // This test is just for example
+    public void sessionFilterExample() {
+
+        SessionFilter session = new SessionFilter();
+
+        RestAssured
+            .given()
+                .header("Content-Type", "application/json; charset=utf-8")
+                .queryParam("page", "2")
+                .body("""
+                        {
+                            "username": "SachinKn",
+                            "password": "Sachin@123"
+                        }
+                        """)
+                .filter(session)  // This will store the session cookie after login
+            .when()
+                .post("/api/users")
+            .then()
+                .log()
+                .status();
+
+        RestAssured
+            .given()
+                .header("Content-Type", "application/json; charset=utf-8")
+                .queryParam("page", "2")
+                .filter(session)  // Here it will use the same session and treated as login user.
+            .when()
+                .get("/api/users")
+            .then()
+                .log()
+                .status();
+    }
+
+    @Test(enabled = false) // This test is just for example
+    public void allTheMethods() {
+
+        SessionFilter session = new SessionFilter();
+
+        RestAssured
+            .given()
+                .header("Content-Type", "application/json; charset=utf-8")
+                .pathParam("path1", "api")
+                .queryParam("page", "2")
+                .formParam("", "")
+                .body("{ \"name\": \"Sachin\" }")
+                .filter(session)
+                .log()
+                .all()
+            .when()
+                .post("/api/users")
+            .then()
+                .log()
+                .all()
+                .assertThat()
+                    .statusCode(200)
+                    .body("page", Matchers.equalTo(2))
+                .extract()
+                    .body()
+                    .asString();
+
+    }
+
 }
