@@ -17,15 +17,11 @@ public class Intro_01_Get_Post_JsonPath {
 
         String getResponse = RestAssured
             .given()
-//                .log()
-//                .all()
                 .header("Content-Type", "application/json; charset=utf-8")
                 .queryParam("page", "2")
             .when()
                 .get("/api/users")
             .then()
-//                .log()
-//                .all()
             .assertThat()
                 .statusCode(200)
                 .body("page", Matchers.equalTo(2))
@@ -42,8 +38,6 @@ public class Intro_01_Get_Post_JsonPath {
 
         String postResponse = RestAssured
             .given()
-//                .log()
-//                .all()
                 .queryParam("", "")
                 .header("Content-Type", "application/json; charset=utf-8")
                 .body("""
@@ -55,8 +49,6 @@ public class Intro_01_Get_Post_JsonPath {
             .when()
                 .post("/api/users")
             .then()
-//                .log()
-//                .all()
             .assertThat()
                 .statusCode(201)
                 .body("name", Matchers.equalTo("Sachin Kn"))
