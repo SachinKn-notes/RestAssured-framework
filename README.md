@@ -1,6 +1,6 @@
 # RestAssured-tutorials
 
-## 0. Important methods.
+## 0. Some important codes.
 
 **Convertions**
 ```
