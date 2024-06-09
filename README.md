@@ -1,5 +1,37 @@
 # RestAssured-tutorials
 
+## 0. Important methods.
+
+**Convertions**
+```
+from JsonString to Pojo		-->  ResRoot person = new Gson().fromJson(myString, ResRoot.class);
+from Pojo to JsonString		-->  String json = new Gson().toJson(myPojo);
+from JsonString to JsonPath	-->  JsonPath jsonPath = new JsonPath(myStringValue);
+from Response to Pojo		-->  myResRoot details = myResponse.as(myResRoot.class);
+from Response to jsonString	-->  String resString = myResponse.asString();
+```
+
+**To print response**
+```
+to log all response      	-->  myResponse.then().log().all();
+to print only json	 	-->  myResponse.print();
+to prettyPrint only json 	-->  myResponse.prettyPrint();
+```
+
+**Assertions**
+```
+myResponse.then().assertThat().
+	   statusCode(200).
+	   body("isSucceed", equalTo(true)).
+	   body("data.list[0].startDateTime", equalTo("01-Aug-2023")).
+	   header("Content-Type", "application/json; charset=utf-8");
+```
+
+**To get the count of JsonList**
+```
+int count = jsonPath.getInt("data.list.size()");
+```
+
 ## 1. All the methods of Rest Assured.
 
 ```
