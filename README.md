@@ -321,6 +321,41 @@ public void jsonDeserialization() {
 }
 ```
 
+## 8. Request Spec Builder.
+```
+public void RequestSpecBuilder() {
+    SessionFilter session = new SessionFilter();
+
+    RequestSpecification reqSpec = new RequestSpecBuilder()
+            .setBaseUri("https://reqres.in")
+            .setContentType(ContentType.JSON)
+            .addHeader("Content-Type", "application/json; charset=utf-8")
+            .addPathParam("path", "api")
+            .addQueryParam("page", "2")
+            .addFormParam("", "")
+        .build();
+
+    RestAssured
+        .given()
+            .spec(reqSpec).body("{ \"name\": \"Sachin\" }")
+            .headers("", "") // After build also we can add other request specs
+            .filter(session)
+            .log()
+            .all()
+        .when()
+            .post("/api/users")
+            .then()
+        .extract()
+            .body()
+            .asString();
+}
+```
+
+## 8. Response Spec Builder.
+```
+
+```
+
 
 
 
