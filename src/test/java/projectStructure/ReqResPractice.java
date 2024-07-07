@@ -22,14 +22,8 @@ class BaseTest {
     public void beforeMethod() {
         reqSpec = new RequestSpecBuilder()
                 .setBaseUri(baseURI)
-//              .setAuth(new BasicAuthScheme() {{
-//                  setUserName("");
-//                  setPassword("");
-//              }})
-//             .setProxy(
-//                      new ProxySpecification("your-proxy-host", 9090, "http")
-//                               .withAuth("proxy-username", "proxy-password")
-//              )
+//              .setAuth(new BasicAuthScheme() {{ setUserName(""); setPassword(""); }})
+//              .setProxy(new ProxySpecification("123.123.1.1", 9090, "http").withAuth("", ""))
                 .setContentType(ContentType.JSON)
                 .addHeader("Accept", "*/*")
                 .addPathParam("pathParam", "api")
