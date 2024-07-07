@@ -1,10 +1,12 @@
 package tutorials;
 
 import io.restassured.RestAssured;
+import io.restassured.authentication.BasicAuthScheme;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.session.SessionFilter;
 import io.restassured.http.ContentType;
+import io.restassured.specification.ProxySpecification;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.hamcrest.Matchers;
@@ -12,17 +14,26 @@ import org.testng.annotations.Test;
 
 public class Intro_05_SpecBuilder {
 
+    String baseURI = "https://reqres.in";
     @Test
     public void RequestSpecBuilder() {
         SessionFilter session = new SessionFilter();
 
         RequestSpecification reqSpec = new RequestSpecBuilder()
-                .setBaseUri("https://reqres.in")
+                .setBaseUri(baseURI)
+//              .setAuth(new BasicAuthScheme() {{
+//                  setUserName("your-username");
+//                  setPassword("your-password");
+//              }})
+//             .setProxy(
+//                      new ProxySpecification("your-proxy-host", 9090, "http")
+//                               .withAuth("proxy-username", "proxy-password")
+//              )
                 .setContentType(ContentType.JSON)
                 .addHeader("Content-Type", "application/json; charset=utf-8")
-                .addPathParam("path", "api")
+                .addPathParam("pathParam", "api")
                 .addQueryParam("page", "2")
-                .addFormParam("", "")
+//              .addFormParam("", "")
             .build();
 
         RestAssured
@@ -33,22 +44,28 @@ public class Intro_05_SpecBuilder {
                 .log()
                 .all()
             .when()
-                .post("/api/users")
+                .post("/{pathParam}/users")
             .then()
-                .extract()
-                .body()
-                .asString();
+                .log().all();
     }
 
     @Test
     public void ResponseSpecBuilder() {
         RequestSpecification reqSpec = new RequestSpecBuilder()
                 .setBaseUri("https://reqres.in")
+//              .setAuth(new BasicAuthScheme() {{
+//                  setUserName("your-username");
+//                  setPassword("your-password");
+//              }})
+//              .setProxy(
+//                      new ProxySpecification("your-proxy-host", 9090, "http")
+//                              .withAuth("proxy-username", "proxy-password")
+//              )
                 .setContentType(ContentType.JSON)
                 .addHeader("Content-Type", "application/json; charset=utf-8")
-                .addPathParam("path", "api")
+                .addPathParam("pathParam", "api")
                 .addQueryParam("page", "2")
-                .addFormParam("", "")
+//              .addFormParam("", "")
             .build();
 
         ResponseSpecification resSpec = new ResponseSpecBuilder()
@@ -61,12 +78,10 @@ public class Intro_05_SpecBuilder {
             .given()
                 .spec(reqSpec) // Request Spec Builder
             .when()
-                .post("/api/users")
+                .get("/{pathParam}/users")
             .then()
                 .spec(resSpec) // Response Spec Builder
-            .extract()
-                .body()
-                .asString();
+                .log().all();
 
     }
 }
