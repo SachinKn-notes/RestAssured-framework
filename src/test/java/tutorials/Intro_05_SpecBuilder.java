@@ -21,14 +21,8 @@ public class Intro_05_SpecBuilder {
 
         RequestSpecification reqSpec = new RequestSpecBuilder()
                 .setBaseUri(baseURI)
-//              .setAuth(new BasicAuthScheme() {{
-//                  setUserName("your-username");
-//                  setPassword("your-password");
-//              }})
-//             .setProxy(
-//                      new ProxySpecification("your-proxy-host", 9090, "http")
-//                               .withAuth("proxy-username", "proxy-password")
-//              )
+//              .setAuth(new BasicAuthScheme() {{ setUserName(""); setPassword(""); }})
+//              .setProxy(new ProxySpecification("123.123.1.1", 9090, "http").withAuth("", ""))
                 .setContentType(ContentType.JSON)
                 .addHeader("Content-Type", "application/json; charset=utf-8")
                 .addPathParam("pathParam", "api")
@@ -53,14 +47,8 @@ public class Intro_05_SpecBuilder {
     public void ResponseSpecBuilder() {
         RequestSpecification reqSpec = new RequestSpecBuilder()
                 .setBaseUri("https://reqres.in")
-//              .setAuth(new BasicAuthScheme() {{
-//                  setUserName("your-username");
-//                  setPassword("your-password");
-//              }})
-//              .setProxy(
-//                      new ProxySpecification("your-proxy-host", 9090, "http")
-//                              .withAuth("proxy-username", "proxy-password")
-//              )
+//              .setAuth(new BasicAuthScheme() {{ setUserName(""); setPassword(""); }})
+//              .setProxy(new ProxySpecification("123.123.1.1", 9090, "http").withAuth("", ""))
                 .setContentType(ContentType.JSON)
                 .addHeader("Content-Type", "application/json; charset=utf-8")
                 .addPathParam("pathParam", "api")
