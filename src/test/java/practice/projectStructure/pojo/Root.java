@@ -1,4 +1,4 @@
-package projectStructure.pojo;
+package practice.projectStructure.pojo;
 
 import java.util.ArrayList;
 

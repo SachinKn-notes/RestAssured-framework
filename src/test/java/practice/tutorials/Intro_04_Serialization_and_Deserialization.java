@@ -1,8 +1,8 @@
-package tutorials;
+package practice.tutorials;
 
-import PojoClasses.Course;
-import PojoClasses.Dashboard;
-import PojoClasses.Root;
+import PojoClasses_Practice.Course;
+import PojoClasses_Practice.Dashboard;
+import PojoClasses_Practice.Root;
 import com.google.gson.Gson;
 import org.testng.annotations.Test;
 

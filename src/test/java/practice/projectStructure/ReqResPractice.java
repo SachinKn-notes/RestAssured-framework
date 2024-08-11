@@ -1,17 +1,15 @@
-package projectStructure;
+package practice.projectStructure;
 
 import io.restassured.RestAssured;
-import io.restassured.authentication.BasicAuthScheme;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.specification.ProxySpecification;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.hamcrest.Matchers;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import projectStructure.pojo.Root;
+import practice.projectStructure.pojo.Root;
 
 class BaseTest {
     String baseURI = "https://reqres.in";

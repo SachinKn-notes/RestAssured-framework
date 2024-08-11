@@ -1,4 +1,4 @@
-package PojoClasses;
+package PojoClasses_Practice;
 
 public class Course {
     private String title;
