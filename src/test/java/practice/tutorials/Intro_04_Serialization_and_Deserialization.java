@@ -1,8 +1,8 @@
 package practice.tutorials;
 
-import Practice_pojo.Course;
-import Practice_pojo.Dashboard;
-import Practice_pojo.Root;
+import practice_pojo.Course;
+import practice_pojo.Dashboard;
+import practice_pojo.Root;
 import com.google.gson.Gson;
 import org.testng.annotations.Test;
 
