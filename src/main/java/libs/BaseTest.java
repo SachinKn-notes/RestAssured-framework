@@ -7,14 +7,17 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import io.restassured.specification.RequestSpecification;
 import libs.utils.JsonPathUtils;
 import libs.utils.LoggerUtils;
-import libs.utils.ScreenGrabber;
 import libs.utils.ZipUtils;
 import org.apache.commons.io.FileUtils;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,16 +37,16 @@ public class BaseTest {
         return testInfoMap.get(threadID);
     }
 
+    public RequestSpecification reqSpec;
+
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite() {
         try {
             FileUtils.deleteDirectory(new File("./test-output/ExtentReport"));
-            FileUtils.deleteDirectory(new File("./test-output/Screenshots"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         new File("./test-output/ExtentReport").mkdirs();
-        new File("./test-output/Screenshots").mkdirs();
 
         ExtentSparkReporter extentSparkReporter = new ExtentSparkReporter(new File("./test-output/ExtentReport/AutomationReport.html"));
         extentSparkReporter.config().setReportName("Automation Report");
@@ -66,8 +69,7 @@ public class BaseTest {
 
         new File("./archive").mkdirs();
         List<String> targetPaths = List.of(
-                "./test-output/ExtentReport",
-                "./test-output/Screenshots"
+                "./test-output/ExtentReport"
         );
 
         String dateName = new SimpleDateFormat("yyyyMMMdd-hhmmss").format(new Date());
@@ -87,8 +89,8 @@ public class BaseTest {
         String testName = method.getAnnotation(Test.class).testName().replaceAll(":", "-").replaceAll("[\\\\/*?\"<>|]", "&");
         String[] groups = method.getAnnotation(Test.class).groups();
 
-        String name = groups[0] + " - " + testName + (((WebDriverActions) obj[0]).getDriverNumber() == 0
-                ? "" : "_" + ((WebDriverActions) obj[0]).getDriverNumber());
+        String name = groups[0] + " - " + testName + (((ApiActions) obj[0]).getDriverNumber() == 0
+                ? "" : "_" + ((ApiActions) obj[0]).getDriverNumber());
         ExtentTest extentTest = extentReports.createTest(name);
 
         testInfoMap.put(Thread.currentThread().getId(), extentTest);
@@ -110,10 +112,10 @@ public class BaseTest {
                 extentTest.fail(MarkupHelper.createLabel(result.getName() + " failed", ExtentColor.RED));
                 extentTest.fail(result.getThrowable());
 
-                // To Capture screenshots.
-				if (((WebDriverActions) obj[0]).getWebDriver() != null) {
-                    ScreenGrabber.getScreenshot(((WebDriverActions) obj[0]).getWebDriver(), "FailedScreenshot");
-				}
+//                // To Capture screenshots.
+//				if (((ApiActions) obj[0]).getWebDriver() != null) {
+//                    ScreenGrabber.getScreenshot(((ApiActions) obj[0]).getWebDriver(), "FailedScreenshot");
+//				}
             }
 
             else if (result.getStatus() == ITestResult.SKIP) {
@@ -121,15 +123,10 @@ public class BaseTest {
                 extentTest.skip(MarkupHelper.createLabel(result.getName() + " skipped", ExtentColor.BLUE));
                 extentTest.skip(result.getThrowable());
 
-                // To Capture screenshots.
-                if (((WebDriverActions) obj[0]).getWebDriver() != null) {
-                    ScreenGrabber.getScreenshot(((WebDriverActions) obj[0]).getWebDriver(), "FailedScreenshot");
-                }
-            }
-
-            // Close browser
-            if (((WebDriverActions) obj[0]).getWebDriver() != null) {
-                ((WebDriverActions) obj[0]).quitDriver();
+//                // To Capture screenshots.
+//                if (((ApiActions) obj[0]).getWebDriver() != null) {
+//                    ScreenGrabber.getScreenshot(((ApiActions) obj[0]).getWebDriver(), "FailedScreenshot");
+//                }
             }
 
         } catch (Exception e) {
@@ -149,12 +146,19 @@ public class BaseTest {
         JsonPathUtils jsonPathUtils = new JsonPathUtils("./src/test/resources/TestData.json");
         int dataCount = jsonPathUtils.getSize(parameters);
 
+        reqSpec = new RequestSpecBuilder()
+                .setBaseUri("https://reqres.in")
+//              .setAuth(new BasicAuthScheme() {{ setUserName(""); setPassword(""); }})
+//              .setProxy(new ProxySpecification("123.123.1.1", 9090, "http").withAuth("", ""))
+                .addHeader("Content-Type", "application/json; charset=utf-8")
+            .build();
+
         List<Object[]> data = new ArrayList<>();
         for (int i=0; i<dataCount; i++) {
             JsonPath testData = jsonPathUtils.getJsonPath(parameters[0], parameters[1] + "[" + i + "]");
-            WebDriverActions webDriverActions = new WebDriverActions();
-            webDriverActions.setDriverNumber(i);
-            data.add(new Object[]{ webDriverActions, testData });
+            ApiActions apiActions = new ApiActions();
+            apiActions.setDriverNumber(i);
+            data.add(new Object[]{ apiActions, testData });
         }
         return data.toArray(Object[][]::new);
     }
