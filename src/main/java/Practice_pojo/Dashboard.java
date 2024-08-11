@@ -1,4 +1,4 @@
-package PojoClasses_Practice;
+package Practice_pojo;
 
 public class Dashboard {
     private int purchaseAmount;

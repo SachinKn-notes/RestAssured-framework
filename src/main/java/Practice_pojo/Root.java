@@ -1,4 +1,4 @@
-package PojoClasses_Practice;
+package Practice_pojo;
 
 import java.util.ArrayList;
 
