@@ -3,6 +3,7 @@ package libs.utils;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.CodeLanguage;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import libs.BaseTest;
@@ -16,6 +17,16 @@ public class ReporterUtils {
 //    private static final String ERROR_TABLE_COLOR = "#FF0000; color:black";
 
     private ReporterUtils() {}
+
+    public static void writeReqAndResLogsToReport(Status status, String reqLogs, String resLogs) {
+        ExtentTest extentTest = BaseTest.getExtentTest(Thread.currentThread().getId());
+
+        ExtentTest reqLogsNode = extentTest.createNode("Request Logs");
+        ExtentTest resLogsNode = extentTest.createNode("Response Logs");
+
+        reqLogsNode.log(status, MarkupHelper.createCodeBlock(reqLogs));
+        resLogsNode.log(status, MarkupHelper.createCodeBlock(resLogs));
+    }
 
     public static void writeStatusToReportWithMsg(Status status, String messageToWrite) {
         ExtentTest extentTest = BaseTest.getExtentTest(Thread.currentThread().getId());
