@@ -21,11 +21,8 @@ public class ReporterUtils {
     public static void writeReqAndResLogsToReport(Status status, String reqLogs, String resLogs) {
         ExtentTest extentTest = BaseTest.getExtentTest(Thread.currentThread().getId());
 
-        ExtentTest reqLogsNode = extentTest.createNode("Request Logs");
-        ExtentTest resLogsNode = extentTest.createNode("Response Logs");
-
-        reqLogsNode.log(status, MarkupHelper.createCodeBlock(reqLogs));
-        resLogsNode.log(status, MarkupHelper.createCodeBlock(resLogs));
+        ExtentTest reqAndResLogsNode = extentTest.createNode("Request & Response Logs");
+        reqAndResLogsNode.log(status, MarkupHelper.createCodeBlock(reqLogs, resLogs));
     }
 
     public static void writeStatusToReportWithMsg(Status status, String messageToWrite) {
