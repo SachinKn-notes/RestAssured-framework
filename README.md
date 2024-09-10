@@ -3,7 +3,7 @@
 ## 0. Some important codes.
 
 **Convertions**
-```
+```java
 from JsonString to Pojo		-->  ResRoot person = new Gson().fromJson(myString, ResRoot.class);
 from Pojo to JsonString		-->  String json = new Gson().toJson(myPojo);
 from JsonString to JsonPath	-->  JsonPath jsonPath = new JsonPath(myStringValue);
@@ -12,14 +12,14 @@ from Response to jsonString	-->  String resString = myResponse.asString();
 ```
 
 **To print response**
-```
+```java
 to log all response      	-->  myResponse.then().log().all();
 to print only json	 	-->  myResponse.print();
 to prettyPrint only json 	-->  myResponse.prettyPrint();
 ```
 
 **Assertions**
-```
+```java
 myResponse.then().assertThat().
 	   statusCode(200).
 	   body("isSucceed", equalTo(true)).
@@ -28,13 +28,13 @@ myResponse.then().assertThat().
 ```
 
 **To get the count of JsonList**
-```
+```java
 int count = jsonPath.getInt("data.list.size()");
 ```
 
 ## 1. All the methods of Rest Assured.
 
-```
+```java
 public void allTheMethods() {
 
         SessionFilter session = new SessionFilter();
@@ -65,7 +65,7 @@ public void allTheMethods() {
 ```
 
 ## 2. Simple GET Request.
-```
+```java
 public void getRequest() {
 
         String getResponse = RestAssured
@@ -88,7 +88,7 @@ public void getRequest() {
 ```
 
 ## 3. Simple POST Request.
-```
+```java
 public void postRequest() {
 
         String postResponse = RestAssured
@@ -116,7 +116,7 @@ public void postRequest() {
 ```
 
 ## 4. Dynamic Path Parameter Request.
-```
+```java
 public void dynamicPathParameterRequest() {
 
         String postResponse = RestAssured
@@ -137,7 +137,7 @@ public void dynamicPathParameterRequest() {
 ```
 
 ## 5. Session Filter Example.
-```
+```java
 public void sessionFilterExample() {
 
         SessionFilter session = new SessionFilter();
@@ -175,7 +175,7 @@ public void sessionFilterExample() {
 ```
 
 ## 6. Json Path Exercise.
-```
+```java
 public void jsonPathTest() {
 
         JsonPath jsonPath = new JsonPath("""
@@ -227,7 +227,7 @@ public void jsonPathTest() {
 }
 ```
 **Output**
-```
+```text
 1. Print No of courses returned by API
 >> 3
 
@@ -250,7 +250,7 @@ public void jsonPathTest() {
 
 ## 7. Serialization
 **Converts a Java object, such as a Plain Old Java Object (POJO), into a format like JSON**
-```
+```java
 public void jsonSerialization() {
 	Dashboard dashboard = new Dashboard();
 	dashboard.setWebsite("sachinkn.in");
@@ -287,7 +287,7 @@ public void jsonSerialization() {
 
 ## 7. Deserialization
 **The opposite of serialization, deserialization converts the serialized data back into a Java object.**
-```
+```java
 public void jsonDeserialization() {
 
     String jsonString = """
@@ -322,7 +322,7 @@ public void jsonDeserialization() {
 ```
 
 ## 8. Request Spec Builder.
-```
+```java
 public void RequestSpecBuilder() {
     SessionFilter session = new SessionFilter();
 
@@ -352,7 +352,7 @@ public void RequestSpecBuilder() {
 ```
 
 ## 8. Response Spec Builder.
-```
+```java
 public void ResponseSpecBuilder() {
     RequestSpecification reqSpec = new RequestSpecBuilder()
             .setBaseUri("https://reqres.in")
